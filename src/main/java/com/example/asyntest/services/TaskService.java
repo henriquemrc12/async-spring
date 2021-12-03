@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@Slf4j
 @Service
 public class TaskService {
 
@@ -29,7 +28,6 @@ public class TaskService {
     @Async
     public void create(TaskFormCreate form){
         try {
-            System.out.println("create Rodando na Thread " + Thread.currentThread().getName());
             TaskEntity newTask = new TaskEntity();
             newTask.setName(form.getName().trim());
             newTask.setDescription(
@@ -46,7 +44,6 @@ public class TaskService {
 
     public CompletableFuture<List<TaskEntity>> findAll(){
         try {
-            System.out.println("findall Rodando na Thread " + Thread.currentThread().getName());
             List<TaskEntity> listFounded = repository.findAll();
             return CompletableFuture.completedFuture(listFounded);
         } catch (Exception e) {
@@ -56,8 +53,6 @@ public class TaskService {
 
     public CompletableFuture<DtoPaginator> findAllPageable(int quantity, int page){
         try {
-            System.out.println("findallPageable Rodando na Thread "+ Thread.currentThread().getName());
-
             Pageable sort = PageRequest.of(page, quantity, Sort.unsorted());
             Page<TaskEntity> listFounded = repository
                     .findAll(sort);
